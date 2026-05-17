@@ -204,27 +204,25 @@ Automatic Sync to EKS
 
 ## AWS EKS Cluster
 
-![AWS EKS Cluster](images/eks-cluster.png)
+![AWS EKS Cluster](images/imageseks-cluster.png)
 
 ---
 
 ## Jenkins CI/CD Pipeline
 
-![Jenkins Pipeline](images/jenkins-pipeline.png)
+![Jenkins Pipeline](images/imagesjenkins-pipeline.png)
 
 ---
 
 ## ArgoCD GitOps Dashboard
 
-![ArgoCD Dashboard](images/argocd-dashboard.png)
+![ArgoCD Dashboard](images/imagesargocd-dashboard.png)
 
 ---
 
 ## Application UI
 
-![Application UI](images/application-ui.png)
-
----
+![Application UI](images/imagesapplication-ui.png)
 
 # Challenges Solved
 
