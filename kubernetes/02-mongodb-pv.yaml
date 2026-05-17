@@ -1,12 +1,16 @@
 apiVersion: v1
-kind: PersistentVolume
+kind: PersistentVolumeClaim
+
 metadata:
-  name: mongodb-pv
+  name: mongodb-pvc
+  namespace: cloudnative-commerce
+
 spec:
-  capacity:
-    storage: 5Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: /data/mongodb
-  persistentVolumeReclaimPolicy: Retain
+
+  resources:
+    requests:
+      storage: 5Gi
+
+  storageClassName: gp2

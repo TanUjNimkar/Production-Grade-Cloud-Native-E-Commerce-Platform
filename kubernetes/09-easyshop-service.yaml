@@ -1,13 +1,16 @@
 apiVersion: v1
 kind: Service
+
 metadata:
-  name: easyshop-service
-  namespace: easyshop
+  name: cloudnative-commerce-service
+  namespace: cloudnative-commerce
+
 spec:
-  type: NodePort
+  type: ClusterIP
+
   ports:
     - port: 80
       targetPort: 3000
-      nodePort: 30000
+
   selector:
-    app: easyshop
+    app: cloudnative-commerce
