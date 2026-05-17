@@ -4,12 +4,16 @@ module "vpc" {
   version = "~> 4.0"
 
   name = local.project_name
+
   cidr = local.vpc_cidr
 
-  azs             = local.azs
-  public_subnets  = local.public_subnets
+  azs = local.azs
+
+  public_subnets = local.public_subnets
+
   private_subnets = local.private_subnets
-  intra_subnets   = local.intra_subnets
+
+  intra_subnets = local.intra_subnets
 
   enable_nat_gateway = true
 
