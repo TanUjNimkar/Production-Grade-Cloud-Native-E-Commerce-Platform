@@ -2,17 +2,23 @@
 
 pipeline {
     agent any
-    
+
     environment {
-        // Update the main app image name to match the deployment file
-        DOCKER_IMAGE_NAME = 'trainwithshubham/easyshop-app'
-        DOCKER_MIGRATION_IMAGE_NAME = 'trainwithshubham/easyshop-migration'
+
+        DOCKER_IMAGE_NAME = 'tanuj7777777/cloudnative-commerce-app'
+        DOCKER_MIGRATION_IMAGE_NAME = 'tanuj7777777/cloudnative-commerce-migration'
+
         DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
+
         GITHUB_CREDENTIALS = credentials('github-credentials')
-        GIT_BRANCH = "master"
+
+        GIT_BRANCH = "main"
+
+        GIT_REPO = "https://github.com/TanUjNimkar/Production-Grade-Cloud-Native-E-Commerce-Platform.git"
     }
-    
+
     stages {
+
         stage('Cleanup Workspace') {
             steps {
                 script {
@@ -20,20 +26,26 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Clone Repository') {
             steps {
                 script {
-                    clone("https://github.com/LondheShubham153/tws-e-commerce-app.git","master")
+                    clone(
+                        env.GIT_REPO,
+                        env.GIT_BRANCH
+                    )
                 }
             }
         }
-        
+
         stage('Build Docker Images') {
+
             parallel {
+
                 stage('Build Main App Image') {
                     steps {
                         script {
+
                             docker_build(
                                 imageName: env.DOCKER_IMAGE_NAME,
                                 imageTag: env.DOCKER_IMAGE_TAG,
@@ -43,10 +55,11 @@ pipeline {
                         }
                     }
                 }
-                
+
                 stage('Build Migration Image') {
                     steps {
                         script {
+
                             docker_build(
                                 imageName: env.DOCKER_MIGRATION_IMAGE_NAME,
                                 imageTag: env.DOCKER_IMAGE_TAG,
@@ -58,7 +71,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Run Unit Tests') {
             steps {
                 script {
@@ -66,23 +79,23 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Security Scan with Trivy') {
             steps {
                 script {
-                    // Create directory for results
-                  
                     trivy_scan()
-                    
                 }
             }
         }
-        
+
         stage('Push Docker Images') {
+
             parallel {
+
                 stage('Push Main App Image') {
                     steps {
                         script {
+
                             docker_push(
                                 imageName: env.DOCKER_IMAGE_NAME,
                                 imageTag: env.DOCKER_IMAGE_TAG,
@@ -91,10 +104,11 @@ pipeline {
                         }
                     }
                 }
-                
+
                 stage('Push Migration Image') {
                     steps {
                         script {
+
                             docker_push(
                                 imageName: env.DOCKER_MIGRATION_IMAGE_NAME,
                                 imageTag: env.DOCKER_IMAGE_TAG,
@@ -105,17 +119,17 @@ pipeline {
                 }
             }
         }
-        
-        // Add this new stage
+
         stage('Update Kubernetes Manifests') {
             steps {
                 script {
+
                     update_k8s_manifests(
                         imageTag: env.DOCKER_IMAGE_TAG,
                         manifestsPath: 'kubernetes',
                         gitCredentials: 'github-credentials',
-                        gitUserName: 'Jenkins CI',
-                        gitUserEmail: 'shubhamnath5@gmail.com'
+                        gitUserName: 'TanUjNimkar',
+                        gitUserEmail: 'tanujnimkar2016@gmail.com'
                     )
                 }
             }
