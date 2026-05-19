@@ -90,7 +90,7 @@ resource "aws_instance" "jenkins_server" {
     volume_type = "gp3"
   }
 
-  tags = {
+  tag = {
     Name        = "${local.project_name}-jenkins-server"
     Environment = var.environment
   }
