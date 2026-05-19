@@ -4,7 +4,7 @@ data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
-    name   = "state"
+    name   = "stat"
     values = ["available"]
   }
 
