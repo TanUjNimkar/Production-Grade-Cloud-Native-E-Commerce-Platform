@@ -8,7 +8,7 @@ metadata:
 spec:
   template:
 
-    spe:
+    spec:
       containers:
 
         - name: migration
